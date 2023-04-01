@@ -14,7 +14,7 @@
     "password":  "2ksKCWxd",
     "database": "harena",
     "port":"19782",
-    "host": "mysql-118851-0.cloudclusters.ne",
+    "host": "mysql-118851-0.cloudclusters.net",
     "dialect": "mysql"
   
   },
@@ -23,7 +23,7 @@
     "password":  "2ksKCWxd",
     "database": "harena",
     "port":"19782",
-    "host": "mysql-118851-0.cloudclusters.ne",
+    "host": "mysql-118851-0.cloudclusters.net",
     "dialect": "mysql"
    
   }
