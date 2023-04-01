@@ -23,23 +23,7 @@ async function tableChange() {
     console.log("finished")
 }
 // tableChange();
-async function addAdmin(){
-    const hash = await bcrypt.hashSync("Firaol@$347", bcrypt.genSaltSync(10));
-    console.log(hash);
-    return sequelize.models.Admin.create({
-        Aid:"",
-        aFname:"Firaol",
-        phonenumber:"+251966003807",
-        aLname:"Getachew",
-        telUsername:"@FiraolGetachew",
-        password:hash
-    }).then((data)=>{
-        console.log(data);
-        console.log("finished")
-    }).catch(err=>{
-        console.log(err);
-    })
-}
+
 async function checkdb(){
     try {
     await sequelize.authenticate();
