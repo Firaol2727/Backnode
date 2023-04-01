@@ -48,7 +48,7 @@ async function checkdb(){
     console.error('Unable to connect to the database:', error);
   }
 }
-// checkdb();
+checkdb();
 // main();
 // addAdmin()
 // main() creating the database 
