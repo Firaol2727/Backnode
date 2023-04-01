@@ -12,7 +12,7 @@ var cookieParser=require('cookie-parser');
 const { Op} = require('sequelize');
 const { json } = require('express');
 const{Admin,Cart,Category,Customer,Orders,Pictures,Product,Seller,Broadcategory}=sequelize.models;
-
+const port =process.env.PORT||5000
 async function main() {
     // creating database structures
     await sequelize.sync({force:true});
@@ -407,6 +407,6 @@ app.get('/details/:id',async(req,res)=>{
     })
 })
 
-app.listen(5000,()=>{
+app.listen(port,()=>{
     console.log("server is up and running 5000");
 })
