@@ -42,7 +42,7 @@ app.use(express.urlencoded({
     extended:true
 }));
 app.use(cors({
-    origin: ['https://harena.onrender.com','http://localhost:7494'],
+    origin: ['https://harena.onrender.com','http://localhost:7494',"https://harena.netlify.app"],
     credentials:true,
 }));
 app.options('*', cors());
