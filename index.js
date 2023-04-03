@@ -23,7 +23,24 @@ async function tableChange() {
     console.log("finished")
 }
 // tableChange();
-
+async function addSeller() {
+    const hash = await bcrypt.hashSync("789", bcrypt.genSaltSync(10));
+    console.log(hash);
+    await Seller.create({
+        sid:"",
+        managerFname:"Naol",
+        manageLname:"Getachew",
+        companyName:"Metebaber",
+        phoneNo:"+251966003808",
+        region:"Oromia",
+        Stream:"Fashio",
+        city:"Jimma",
+        subcity:"bole",
+        slocation:"Bole,Golagol Tower",
+        password:hash
+    })
+    console.log("finished")
+}
 async function checkdb(){
     try {
     await sequelize.authenticate();
@@ -33,6 +50,7 @@ async function checkdb(){
   }
 }
 checkdb();
+addSeller();
 // main();
 // addAdmin()
 // main() creating the database 
