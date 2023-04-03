@@ -45,7 +45,11 @@ const authorizeCustomer=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         // console.log("accessToken",accessToken);
-        res.cookie("u",accessToken,{httpOnly:true});
+        res.cookie(
+            "u",accessToken,
+            { httpOnly:true,secure:true,sameSite:"none"
+
+            });
         next();
     }
     else {
