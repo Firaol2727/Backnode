@@ -45,7 +45,7 @@ app.use(cors({
     origin: ['https://harena.netlify.app','http://localhost:7494',"https://harena.onrender.com"],
     credentials:true,
 }));
-app.options('*', cors());
+// app.options('*', cors());
 app.use(express.json()); 
 app.use(cookieParser());
 app.use('/custom',customerRoutes);
