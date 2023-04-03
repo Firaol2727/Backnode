@@ -50,7 +50,7 @@ async function checkdb(){
   }
 }
 checkdb();
-addSeller();
+// addSeller();
 // main();
 // addAdmin()
 // main() creating the database 
