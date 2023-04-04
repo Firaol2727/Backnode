@@ -70,16 +70,16 @@ app.use(cookieParser());
 app.use('/custom',customerRoutes);
 app.use('/special',adminRoutes);
 app.use('/sel',sellerRoutes);
-app.use(function (req,res,next){
-    res.setHeader("Access-Control-Allow-Origin","https://harena.onrender.com")
+// app.use(function (req,res,next){
+//     res.setHeader("Access-Control-Allow-Origin","https://harena.onrender.com")
 
-    res.setHeader("Access-Control-Allow-Methods",'GET,PUT,POST,DELETE,PATCH,OPTIONS')
+//     res.setHeader("Access-Control-Allow-Methods",'GET,PUT,POST,DELETE,PATCH,OPTIONS')
 
-    res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With,Content-Type,Accept,Authorization")
-    
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next()
-} )
+//     res.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With,Content-Type,Accept,Authorization")
+
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next()
+// } )
 app.get('/images/:picid',(req,res)=>{
     let id=req.params.picid;
     console.log("fetch image - ",id)
