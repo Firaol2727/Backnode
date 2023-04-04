@@ -61,7 +61,7 @@ app.use(express.urlencoded({
 }));
 app.use(cors({
     origin: ['https://harena.netlify.app','http://localhost:7494',
-    "https://harena.onrender.com","https://harena.onrender.com/sellerLogin","https://harena.onrender.com/adlogin"],
+    "https://harena.onrender.com"],
     credentials:true,
 }));
 // app.options('*', cors());
@@ -70,6 +70,14 @@ app.use(cookieParser());
 app.use('/custom',customerRoutes);
 app.use('/special',adminRoutes);
 app.use('/sel',sellerRoutes);
+app.use(function (req,res,next){
+    res.header("Access-Control-Allow-Origin","*")
+
+    res.header("Access-Control-Allow-Methods",'GET,PUT,POST,DELETE,PATCH,OPTIONS')
+
+    res.header("Access-Control-Allow-Credentials",true)
+    
+} )
 app.get('/images/:picid',(req,res)=>{
     let id=req.params.picid;
     console.log("fetch image - ",id)
