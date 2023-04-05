@@ -78,6 +78,25 @@ const checkAuthorization =async(req,res,next)=>{
             }
         )
     }
+    else if(req.headers.cookies){
+        let contentincookie=req.headers.cookies;
+        const token=contentincookie.slice(2);
+        jwt.verify(
+            token,process.env.ACCESS_TOKEN_SECRET,
+            (err,user)=>{
+                if(err){
+                    console.log("error verify")
+                    res.sendStatus(403);
+                }
+                req.user=user;
+                next();
+            }
+        )
+    }
+    else{
+        console.log("Some other error")
+        res.sendStatus(403);
+    }
 }
 router.post('/login',authorize,(req,res)=>{
     res.sendStatus(200);
