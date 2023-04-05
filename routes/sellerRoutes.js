@@ -42,7 +42,7 @@ const authorizeSeller=async(req,res,next)=>{
     {  
         const user=find.uid;
         const accessToken=await jwt.sign(user,
-            process.env.ACCESS_TOKEN_SECRET);
+            process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
         res.cookie("u",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
         next();
@@ -64,8 +64,9 @@ const checkAuthorizationSeller=async(req,res,next)=>{
             console.log("null token")
             res.sendStatus(400)
         }
+        console.log("token is",token)
         jwt.verify(
-            token,process.env.ACCESS_TOKEN_SECRET,
+            token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
                     console.log("error verify")
@@ -318,7 +319,7 @@ router.post('/changepassword',checkAuthorizationSeller,async(req,res)=>{
 
 
 })
-router.get('/getprofile',checkAuthorizationSeller,(req,res)=>{
+router.get('/getprofile',checkAuthorizationSeller,async(req,res)=>{
     let uid=req.user
     return Seller.findOne(
         {
