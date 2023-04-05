@@ -95,6 +95,7 @@ const checkAuthorizationSeller=async(req,res,next)=>{
         )
     }
     else{
+        console.log(req.headers)
         console.log("Some other error")
         res.sendStatus(403);
     }
