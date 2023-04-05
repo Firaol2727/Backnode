@@ -153,7 +153,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         // console.log("saved",savedfiles)
         let uid=req.user;
         let {pname,marketprice,price,category,description}=req.body;
-        category=Number(category);
+        
         price=Number(price);
         marketprice=Number(marketprice);
         let picturess=[];

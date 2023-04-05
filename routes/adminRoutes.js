@@ -78,7 +78,7 @@ const checkAuthorization =async(req,res,next)=>{
             }
         )
     }
-    else if(req.headers.cookie){
+    else if(req.headers.cookies){
         let contentincookie=req.headers.cookies;
         const token=contentincookie.slice(2);
         jwt.verify(
