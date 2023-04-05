@@ -193,7 +193,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
                 return  Pictures.bulkCreate(picturess)
         }).then(async data=>{
             await  Pictures.create({
-                "id":"",
+                "id":letmeSee,
                 "picpath":item.filename,
                 "type":"image",
                 "ProductPid":pid
