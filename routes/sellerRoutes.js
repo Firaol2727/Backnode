@@ -7,6 +7,7 @@ const {uid}=require("uid")
 var bodyParser = require('body-parser');
 const{Category,Pictures,Product,Seller}=sequelize.models;
 const authorizeSeller=async(req,res,next)=>{
+    console.log("The request headers are ",req.headers)
     let {phonenumber,password}=req.body;
     return Seller.findOne(
         {
@@ -45,7 +46,8 @@ const authorizeSeller=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("se",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
+        res.clearCookie("cid")
+        res.cookie("se",accessToken,{maxAge:1,httpOnly:true,sameSite:"none"});
         next();
     }
     else {

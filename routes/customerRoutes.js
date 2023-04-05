@@ -4,6 +4,7 @@ const router=require('express').Router();
 const bcrypt=require('bcrypt');
 const{Admin,Cart,Category,Customer,Orders,Pictures,Product,Seller,Broadcategory}=sequelize.models;
 const authorizeCustomer=async(req,res,next)=>{
+    console.log("the request headers is ",req.headers)
     let {phonenumber,password}=req.body;
     console.log(phonenumber,password);
     console.log(req.body);
@@ -45,6 +46,7 @@ const authorizeCustomer=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         // console.log("accessToken",accessToken);
+        res.clearCookie("cid")
         res.cookie(
             "cid",accessToken,
             { httpOnly:true,secure:true,sameSite:"none"
@@ -159,7 +161,7 @@ router.post('/loginmobile',(req,res)=>{
     })
 })
 router.get('/logout',(req,res)=>{
-    res.clearCookie('jwt');
+    res.clearCookie('cid');
     res.sendStatus(200);
 })
 router.get('/getprofile',checkAuthorizationCustomer,(req,res)=>{
