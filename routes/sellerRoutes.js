@@ -47,7 +47,7 @@ const authorizeSeller=async(req,res,next)=>{
             process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
         res.clearCookie("cid")
-        res.cookie("se",accessToken,{expires: new Date(Date.now() + 900000),httpOnly:true,sameSite:"none"});
+        res.cookie("se",accessToken,{maxAge: 900000,httpOnly:true,sameSite:"none"});
         next();
     }
     else {

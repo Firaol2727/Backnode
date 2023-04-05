@@ -49,7 +49,7 @@ const authorizeCustomer=async(req,res,next)=>{
         res.clearCookie("cid")
         res.cookie(
             "cid",accessToken,
-            { expires: new Date(Date.now() + 900000),httpOnly:true,sameSite:"none"
+            { maxAge:900000,httpOnly:true,sameSite:"none"
 
             });
         next();
