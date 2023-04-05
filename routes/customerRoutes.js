@@ -49,7 +49,7 @@ const authorizeCustomer=async(req,res,next)=>{
         res.clearCookie("cid")
         res.cookie(
             "cid",accessToken,
-            { httpOnly:true,secure:true,sameSite:"none"
+            { httpOnly:true,secure:true
 
             });
         next();
