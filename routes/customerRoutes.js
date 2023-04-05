@@ -4,7 +4,7 @@ const router=require('express').Router();
 const bcrypt=require('bcrypt');
 const{Admin,Cart,Category,Customer,Orders,Pictures,Product,Seller,Broadcategory}=sequelize.models;
 const authorizeCustomer=async(req,res,next)=>{
-    console.log("the request headers is ",req.headers)
+    console.log("the request headers is ",req.headers.cookie)
     let {phonenumber,password}=req.body;
     console.log(phonenumber,password);
     console.log(req.body);
@@ -65,7 +65,7 @@ const authorizeCustomer=async(req,res,next)=>{
     })
 }
 const checkAuthorizationCustomer =async(req,res,next)=>{
-
+    console.log("cookie",req.headers.cookie)
     if(req.cookies.cid){
         console.log("cookies not header",req.headers)
         const token=req.cookies.u;
@@ -77,6 +77,22 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
+                    res.sendStatus(403);
+                }
+                req.user=user;
+                next();
+            }
+        )
+    }
+    else if(req.headers.cookie){
+        console.log(" header",req.headers)
+        let contentincookie=req.headers.cookies;
+        const token=contentincookie.slice(4);
+        jwt.verify(
+            token,process.env.REFRESH_TOKEN_SECRET,
+            (err,user)=>{
+                if(err){
+                    console.log("error verify")
                     res.sendStatus(403);
                 }
                 req.user=user;

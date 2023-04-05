@@ -61,6 +61,7 @@ const authorizeSeller=async(req,res,next)=>{
     })
 }
 const checkAuthorizationSeller=async(req,res,next)=>{
+    console.log("cookie",req.headers.cookie)
     if(req.cookies.se){
         const token=req.cookies.u;
         if(token==null){
@@ -68,6 +69,22 @@ const checkAuthorizationSeller=async(req,res,next)=>{
             res.sendStatus(400)
         }
         console.log("token is",token)
+        jwt.verify(
+            token,process.env.REFRESH_TOKEN_SECRET,
+            (err,user)=>{
+                if(err){
+                    console.log("error verify")
+                    res.sendStatus(403);
+                }
+                req.user=user;
+                next();
+            }
+        )
+    }
+    else if(req.headers.cookie){
+        console.log("header",req.headers)
+        let contentincookie=req.headers.cookies;
+        const token=contentincookie.slice(3);
         jwt.verify(
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
@@ -96,6 +113,7 @@ const checkAuthorizationSeller=async(req,res,next)=>{
             }
         )
     }
+    
     else{
         console.log(req.headers)
         console.log("Some other error")
