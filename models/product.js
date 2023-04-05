@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue:null
     },
     letmeSee:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.STRING,
       allowNull:false
     }
   }, {

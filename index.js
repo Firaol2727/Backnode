@@ -22,7 +22,7 @@ async function tableChange() {
     await Product.sync({alter:true});
     console.log("finished")
 }
-// tableChange();
+tableChange();
 async function addSeller() {
     const hash = await bcrypt.hashSync("789", bcrypt.genSaltSync(10));
     console.log(hash);
