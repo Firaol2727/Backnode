@@ -101,6 +101,7 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
         )
     }
     else{
+        console.log("geader",req.headers)
         console.log("Some other error")
         res.sendStatus(403);
     }
