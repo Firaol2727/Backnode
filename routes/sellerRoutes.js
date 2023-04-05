@@ -45,7 +45,7 @@ const authorizeSeller=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("u",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
+        res.cookie("se",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
         next();
     }
     else {
@@ -59,7 +59,7 @@ const authorizeSeller=async(req,res,next)=>{
     })
 }
 const checkAuthorizationSeller=async(req,res,next)=>{
-    if(req.cookies.u){
+    if(req.cookies.se){
         const token=req.cookies.u;
         if(token==null){
             console.log("null token")
@@ -81,7 +81,7 @@ const checkAuthorizationSeller=async(req,res,next)=>{
     else if(req.headers.cookies){
         console.log("header",req.headers)
         let contentincookie=req.headers.cookies;
-        const token=contentincookie.slice(2);
+        const token=contentincookie.slice(3);
         jwt.verify(
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
@@ -157,7 +157,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         let letmeseeid=uid(16);
         console.log("saved files ",savedfiles);
         console.log("the user id is ",userid)
-        console.log("the user id is ",letmeseeid)
+        console.log("the letmesee id is ",letmeseeid)
         price=Number(price);
         marketprice=Number(marketprice);
   
