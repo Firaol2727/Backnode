@@ -49,7 +49,7 @@ const authorizeCustomer=async(req,res,next)=>{
         res.clearCookie("cid")
         res.cookie(
             "cid",accessToken,
-            { httpOnly:true,secure:true
+            { expires: new Date(Date.now() + 900000),httpOnly:true,sameSite:"none"
 
             });
         next();
@@ -65,7 +65,7 @@ const authorizeCustomer=async(req,res,next)=>{
     })
 }
 const checkAuthorizationCustomer =async(req,res,next)=>{
-    console.log("cookie",req.headers.cookie)
+
     if(req.cookies.cid){
         console.log("cookies not header",req.headers)
         const token=req.cookies.u;
@@ -77,22 +77,6 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
-                    res.sendStatus(403);
-                }
-                req.user=user;
-                next();
-            }
-        )
-    }
-    else if(req.headers.cookie){
-        console.log(" header",req.headers)
-        let contentincookie=req.headers.cookies;
-        const token=contentincookie.slice(4);
-        jwt.verify(
-            token,process.env.REFRESH_TOKEN_SECRET,
-            (err,user)=>{
-                if(err){
-                    console.log("error verify")
                     res.sendStatus(403);
                 }
                 req.user=user;
