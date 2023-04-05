@@ -48,7 +48,7 @@ const authorize=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("aid",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
+        res.cookie("ad",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
         next();
     }
     else {
@@ -62,7 +62,7 @@ const authorize=async(req,res,next)=>{
     })
 }
 const checkAuthorization =async(req,res,next)=>{
-    if(req.cookies.aid){
+    if(req.cookies.ad){
         console.log("cookies not header",req.headers)
         const token=req.cookies.u;
         if(token==null){
@@ -82,7 +82,7 @@ const checkAuthorization =async(req,res,next)=>{
     else if(req.headers.cookies){
         console.log("cookies header",req.headers)
         let contentincookie=req.headers.cookies;
-        const token=contentincookie.slice(2);
+        const token=contentincookie.slice(3);
         jwt.verify(
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
