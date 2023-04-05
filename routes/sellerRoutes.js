@@ -62,7 +62,7 @@ const authorizeSeller=async(req,res,next)=>{
 }
 const checkAuthorizationSeller=async(req,res,next)=>{
     if(req.cookies.se){
-        const token=req.cookies.u;
+        const token=req.cookies.se;
         if(token==null){
             console.log("null token")
             res.sendStatus(400)

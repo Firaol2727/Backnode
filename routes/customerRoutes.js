@@ -68,7 +68,7 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
 
     if(req.cookies.cid){
         console.log("cookies not header",req.headers)
-        const token=req.cookies.u;
+        const token=req.cookies.cid;
         if(token==null){
             console.log("null token")
             res.sendStatus(400);

@@ -64,7 +64,7 @@ const authorize=async(req,res,next)=>{
 const checkAuthorization =async(req,res,next)=>{
     if(req.cookies.ad){
         console.log("cookies not header",req.headers)
-        const token=req.cookies.u;
+        const token=req.cookies.ad;
         if(token==null){
             res.status(400).send("not logged in")
         }
