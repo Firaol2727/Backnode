@@ -3,6 +3,7 @@ const jwt =require('jsonwebtoken');
 const bcrypt=require("bcrypt");
 const router=require('express').Router();
 const fs=require('fs');
+const {uid}=require("uid")
 var bodyParser = require('body-parser');
 const{Category,Pictures,Product,Seller}=sequelize.models;
 const authorizeSeller=async(req,res,next)=>{
@@ -139,7 +140,7 @@ router.get('/logout',(req,res)=>{
 router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
     console.log("body",req.body);
  
-    upload(req,res,function (err) {
+    upload(req,res,async function (err) {
         // console.log(err);
     if(err instanceof multer.MulterError){
         console.log("error occured");
@@ -151,18 +152,16 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         res.send(err);
     }
         const savedfiles=req.files;
-        
-        // console.log("saved",savedfiles)
-        let uid=req.user;
+        let userid=req.user;
         let {pname,marketprice,price,category,description}=req.body;
-        
+        console.log("saved files ",savedfiles);
+        console.log("the user id is ",userid)
         price=Number(price);
         marketprice=Number(marketprice);
-        let picturess=[];
+  ]
         let pid=0;
-        let letmeSee=savedfiles.image[0].filename;
-        console.log(picturess)
         let letid;
+        letmeSee=uid(16);
         return Product.create({
             pid:"",
             pname:pname,
@@ -170,27 +169,35 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
             marketprice:marketprice,
             description:description,
             CategoryCid:category,
-            SellerSid:uid,
-            letmeSee:0
-        }).then(data=>{
+            SellerSid:userid,
+            letmeSee:letmeSee
+        }).then( async data=>{
                 let pid=data.pid;
+                console.log("The product id is ",pid)
                 letid=pid;
                 let picturess=[];
                 savedfiles.image.map((item)=>{
-                    picturess.push({
+                    if(savedfiles[0].filname==item.filename){
+                        console.log("the picture skippeed")
+                    }
+                    else{
+                        picturess.push({
                         "id":"",
                         "picpath":item.filename,
                         "type":"image",
                         "ProductPid":pid
                     })
+                    }
+                    
                 })
                 return  Pictures.bulkCreate(picturess)
         }).then(async data=>{
-            await Product.update({
-                letmeSee:data[0].id
-            },{where:{
-                pid:letid
-            }})
+            await  Pictures.create({
+                "id":"",
+                "picpath":item.filename,
+                "type":"image",
+                "ProductPid":pid
+            })
             res.status(200).send(' <div style="color:red; position:absolute;left:20%;top:20%;width:50%;height:50%"> <h1> SuccessFull Upload <h1>  <hr>  <a href="http://localhost:3000/selhome"> back<a/> </div> ')
         }).catch(err=>{
             console.log(err);
