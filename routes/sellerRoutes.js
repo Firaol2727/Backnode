@@ -46,7 +46,7 @@ const authorizeSeller=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.REFRESH_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.clearCookie("cid")
+        res.clearCookie("se")
         res.cookie("se",accessToken,{maxAge:1,httpOnly:true,sameSite:"none"});
         next();
     }
