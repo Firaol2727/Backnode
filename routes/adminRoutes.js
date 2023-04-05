@@ -48,7 +48,7 @@ const authorize=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.ACCESS_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("jwt",accessToken,{httpOnly:true});
+        res.cookie("a",accessToken,{httpOnly:true,sameSite:"none"});
         next();
     }
     else {
@@ -62,8 +62,8 @@ const authorize=async(req,res,next)=>{
     })
 }
 const checkAuthorization =async(req,res,next)=>{
-    if(req.cookies.jwt){
-        const token=req.cookies.jwt;
+    if(req.cookies.a){
+        const token=req.cookies.a;
         if(token==null){
             res.status(400).send("not logged in")
         }
