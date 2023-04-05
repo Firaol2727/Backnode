@@ -44,7 +44,7 @@ const authorizeSeller=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.ACCESS_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("u",accessToken,{maxAge: 7200000,httpOnly:true});
+        res.cookie("u",accessToken,{maxAge: 7200000,httpOnly:true,sameSite:"none"});
         next();
     }
     else {
@@ -61,13 +61,15 @@ const checkAuthorizationSeller=async(req,res,next)=>{
     if(req.cookies.u){
         const token=req.cookies.u;
         if(token==null){
-            res.status(400).send("not logged in")
+            console.log("null token")
+            res.sendStatus(400)
         }
         jwt.verify(
             token,process.env.ACCESS_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
-                    res.sendStatus(404);
+                    console.log("error verify")
+                    res.sendStatus(403);
                 }
                 req.user=user;
                 next();
@@ -81,12 +83,17 @@ const checkAuthorizationSeller=async(req,res,next)=>{
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
+                    console.log("error verify")
                     res.sendStatus(403);
                 }
                 req.user=user;
                 next();
             }
         )
+    }
+    else{
+        console.log("Some other error")
+        res.sendStatus(403);
     }
 }
 let filname;

@@ -67,6 +67,7 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
     if(req.cookies.u){
         const token=req.cookies.u;
         if(token==null){
+            console.log("null token")
             res.sendStatus(400);
         }
         jwt.verify(
@@ -87,6 +88,7 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
                 if(err){
+                    console.log("error verify")
                     res.sendStatus(403);
                 }
                 req.user=user;
@@ -95,6 +97,7 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
         )
     }
     else{
+        console.log("Some other error")
         res.sendStatus(403);
     }
 
