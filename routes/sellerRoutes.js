@@ -158,7 +158,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         console.log("the user id is ",userid)
         price=Number(price);
         marketprice=Number(marketprice);
-  ]
+  
         let pid=0;
         let letid;
         letmeSee=uid(16);
