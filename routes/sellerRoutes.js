@@ -138,8 +138,7 @@ router.get('/logout',(req,res)=>{
 })
 router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
     console.log("body",req.body);
-    let bodies=jsonParser(req.body);
-    console.log("bodies",bodies)
+ 
     upload(req,res,function (err) {
         // console.log(err);
     if(err instanceof multer.MulterError){
