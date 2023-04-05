@@ -44,7 +44,7 @@ const authorizeSeller=async(req,res,next)=>{
         const accessToken=await jwt.sign(user,
             process.env.ACCESS_TOKEN_SECRET);
         console.log("accessToken",accessToken);
-        res.cookie("jwt",accessToken,{maxAge: 7200000,httpOnly:true});
+        res.cookie("u",accessToken,{maxAge: 7200000,httpOnly:true});
         next();
     }
     else {
@@ -58,8 +58,8 @@ const authorizeSeller=async(req,res,next)=>{
     })
 }
 const checkAuthorizationSeller=async(req,res,next)=>{
-    if(req.cookies.jwt){
-        const token=req.cookies.jwt;
+    if(req.cookies.u){
+        const token=req.cookies.u;
         if(token==null){
             res.status(400).send("not logged in")
         }
@@ -74,12 +74,26 @@ const checkAuthorizationSeller=async(req,res,next)=>{
             }
         )
     }
+    else if(req.headers.cookies){
+        let contentincookie=req.headers.cookies;
+        const token=contentincookie.slice(2);
+        jwt.verify(
+            token,process.env.REFRESH_TOKEN_SECRET,
+            (err,user)=>{
+                if(err){
+                    res.sendStatus(403);
+                }
+                req.user=user;
+                next();
+            }
+        )
+    }
 }
 let filname;
 const multer =require('multer');
 const path=require("path");
 var jsonParser = bodyParser.json();
-const { urlencoded } = require('express');
+
 const Deletefiles = require('../deletefile');
 const storage= multer.diskStorage({
     destination:(req,file,cb)=>{
