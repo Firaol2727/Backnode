@@ -62,7 +62,7 @@ const authorize=async(req,res,next)=>{
     })
 }
 const checkAuthorization =async(req,res,next)=>{
-    if(req.cookies.a){
+    if(req.cookies.u){
         const token=req.cookies.u;
         if(token==null){
             res.status(400).send("not logged in")
@@ -78,7 +78,7 @@ const checkAuthorization =async(req,res,next)=>{
             }
         )
     }
-    else if(req.headers.cookies){
+    else if(req.headers.cookie){
         let contentincookie=req.headers.cookies;
         const token=contentincookie.slice(2);
         jwt.verify(
