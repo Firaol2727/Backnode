@@ -154,14 +154,16 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         const savedfiles=req.files;
         let userid=req.user;
         let {pname,marketprice,price,category,description}=req.body;
+        let letmeseeid=uid(16);
         console.log("saved files ",savedfiles);
         console.log("the user id is ",userid)
+        console.log("the user id is ",letmeseeid)
         price=Number(price);
         marketprice=Number(marketprice);
   
         let pid=0;
         let letid;
-        letmeSee=uid(16);
+        
         return Product.create({
             pid:"",
             pname:pname,
@@ -170,7 +172,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
             description:description,
             CategoryCid:category,
             SellerSid:userid,
-            letmeSee:letmeSee
+            letmeSee:letmeseeid
         }).then( async data=>{
                 let pid=data.pid;
                 console.log("The product id is ",pid)
@@ -193,7 +195,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
                 return  Pictures.bulkCreate(picturess)
         }).then(async data=>{
             await  Pictures.create({
-                "id":letmeSee,
+                "id":letmeseeid,
                 "picpath":item.filename,
                 "type":"image",
                 "ProductPid":pid
