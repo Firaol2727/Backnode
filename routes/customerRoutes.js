@@ -46,7 +46,7 @@ const authorizeCustomer=async(req,res,next)=>{
             process.env.REFRESH_TOKEN_SECRET);
         // console.log("accessToken",accessToken);
         res.cookie(
-            "u",accessToken,
+            "cid",accessToken,
             { httpOnly:true,secure:true,sameSite:"none"
 
             });
@@ -64,7 +64,8 @@ const authorizeCustomer=async(req,res,next)=>{
 }
 const checkAuthorizationCustomer =async(req,res,next)=>{
 
-    if(req.cookies.u){
+    if(req.cookies.cid){
+        console.log("cookies not header",req.headers)
         const token=req.cookies.u;
         if(token==null){
             console.log("null token")
@@ -82,8 +83,9 @@ const checkAuthorizationCustomer =async(req,res,next)=>{
         )
     }
     else if(req.headers.cookies){
+        console.log(" header",req.headers)
         let contentincookie=req.headers.cookies;
-        const token=contentincookie.slice(2);
+        const token=contentincookie.slice(4);
         jwt.verify(
             token,process.env.REFRESH_TOKEN_SECRET,
             (err,user)=>{
