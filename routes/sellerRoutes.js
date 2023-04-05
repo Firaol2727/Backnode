@@ -137,6 +137,9 @@ router.get('/logout',(req,res)=>{
     res.cookie('a', 'none', {maxAge: 720000,httpOnly:true }).sendStatus(200)
 })
 router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
+    console.log("body",req.body);
+    let bodies=jsonParser(req.body);
+    console.log("bodies",bodies)
     upload(req,res,function (err) {
         // console.log(err);
     if(err instanceof multer.MulterError){
@@ -149,7 +152,7 @@ router.post('/upload',checkAuthorizationSeller,async (req,res)=>{
         res.send(err);
     }
         const savedfiles=req.files;
-        // console.log("body",req.body);
+        
         // console.log("saved",savedfiles)
         let uid=req.user;
         let {pname,marketprice,price,category,description}=req.body;
